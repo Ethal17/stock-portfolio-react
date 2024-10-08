@@ -42,7 +42,7 @@ class Portfolio extends React.Component {
   }
   
   handleChange(event, index) {
-    const portfolio = this.state.portfolio.slice(); 
+    const portfolio = this.state.portfolio.slice();
     const { name, value } = event.target;
 
     portfolio[index][name] = value;
