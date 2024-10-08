@@ -31,6 +31,7 @@ class Portfolio extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this.addStock = this.addStock.bind(this);
+        
 
         // Note: api JSON data often come in underscore_styled like above
       }
@@ -69,7 +70,10 @@ class Portfolio extends React.Component {
       }
 
       render() {
-        const { portfolio } = this.state;
+        const {
+          portfolio,
+          form, // <-- add this line
+        } = this.state;
       
         const portfolio_market_value = portfolio.reduce((sum, stock) => stock.shares_owned * stock.market_price + sum, 0);
         const portfolio_cost = portfolio.reduce((sum, stock) => stock.shares_owned * stock.cost_per_share + sum, 0);
@@ -120,17 +124,54 @@ class Portfolio extends React.Component {
                   </tbody>
                 </table>
               </div>
-<div className="col-12 col-md-6">
-<h4 className="mb-3">Portfolio value: $ {portfolio_market_value}</h4>
-            </div>
-<div className="col-12 col-md-6">
-    <h4 className="mb-3">Portfolio gain/loss: $ {portfolio_gain_loss}</h4>
-             </div>
-            </div>
+              <form className="col-12 mt-2 mb-4" onSubmit={this.addStock}>
+            <input
+              className="mx-2"
+              name="name"
+              type="text"
+              placeholder="Name"
+              onChange={this.handleFormChange}
+              value={form.name}
+              required
+            />
+            <input
+              className="mx-2"
+              name="shares_owned"
+              type="number"
+              placeholder="Shares"
+              value={form.shares_owned}
+              onChange={this.handleFormChange}
+            />
+            <input
+              className="mx-2"
+              name="cost_per_share"
+              type="number"
+              placeholder="Cost"
+              value={form.cost_per_share}
+              onChange={this.handleFormChange}
+            />
+            <input
+              className="mx-2"
+              name="market_price"
+              type="number"
+              placeholder="Price"
+              value={form.market_price}
+              onChange={this.handleFormChange}
+            />
+            <button className="btn btn-primary btn-sm">add</button>
+          </form>
+          <div className="col-12 col-md-6">
+            <h4 className="mb-3">Portfolio value: $ {portfolio_market_value}</h4>
           </div>
-        );
-      }
+          <div className="col-12 col-md-6">
+            <h4 className="mb-3">Portfolio gain/loss: $ {portfolio_gain_loss}</h4>
+          </div>
+        </div>
+      </div>
+    );
   }
+}
+
   
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container);
